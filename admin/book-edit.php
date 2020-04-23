@@ -10,7 +10,7 @@
 			include "confs/config.php";
 
 			$id = $_GET['id'];
-			$result = mysqli_query("SELECT * FROM books WHERE id = $id");
+			$result = mysqli_query($conn,"SELECT * FROM books WHERE id = $id");
 			$row = mysqli_fetch_assoc($result);
 
 		?>
@@ -35,7 +35,7 @@
 			<input type="text" name="author" id="author" value="<?php echo $row['author'] ?>">
 
 			<label for="summary">Summary</label>
-			<textarea name="summary" id="summary"> <?php $row['summary'] ?> </textarea>
+			<textarea name="summary" id="summary"> <?php echo $row['summary'] ?> </textarea>
 
 			<label for="price">Price</label>
 			<input type="text" name="price" id="price" value="<?php echo $row['price'] ?>">
@@ -47,13 +47,14 @@
 				<option value="0">-- Choose --</option>
 				
 				<?php 
-					$categories = mysqli_query("SELECT id, name FROM categories");
+					include "confs/config.php";
+					$categories = mysqli_query($conn,"SELECT id, name FROM Categories");
 					while($cat = mysqli_fetch_assoc($categories)):
 				 ?>
 					<option value="<?php echo $cat['id'] ?>"
-						<?php if($cat['id'] == $row['category_id']) echo "selected" ?> >
+						<?php if($cat['id'] == $row['category_id']) echo "selected"; ?> >
 
-						<?php echo $cat['name'] ?>
+						<?php echo $cat['name']; ?>
 					
 					</option>
 

@@ -19,7 +19,7 @@
 		 	
 		 	<a href="index.php" class="back">&laquo; Go Back</a>
 
-		 	<img height="300px" width="200px" src="admin/covers/<?php echo $row['cover'] ?>">
+		 	<img height="300px" width="200px" src="admin/covers/<?php echo $row['title'].".png"; ?>">
 
 		 	<h2> <?php echo $row['title'] ?> </h2>
 		 	<i>by <?php echo $row['author'] ?> </i>
@@ -33,13 +33,13 @@
 
  								$row_id = $row['id'];
 
- 								$ordered_book = mysqli_query("SELECT *
+ 								$ordered_book = mysqli_query($conn,"SELECT *
 						 					FROM order_items LEFT JOIN books ON order_items.book_id = books.id
 						 					WHERE order_items.book_id = $row_id");
  								$ordered = mysqli_fetch_assoc($ordered_book);
  								
 
- 								$tmp_book = mysqli_query("SELECT * FROM tmp_book_items WHERE tmp_book_id = $row_id");
+ 								$tmp_book = mysqli_query($conn, "SELECT * FROM tmp_book_items WHERE tmp_book_id = $row_id");
  								$tmp = mysqli_fetch_assoc($tmp_book);
 
  								?>

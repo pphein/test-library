@@ -125,7 +125,7 @@
  				<?php while($row = mysqli_fetch_assoc($books)): ?>
  					<li>
  						<div class="info">
- 						<img src="admin/covers/<?php echo $row['cover'] ?>" height= "150" width="100">
+ 						<img src="admin/covers/<?php echo $row['title'].".png"; ?>" height= "150" width="100">
 
  						<b>
  							<a href="book-detail.php?id=<?php echo $row['id'] ?>">

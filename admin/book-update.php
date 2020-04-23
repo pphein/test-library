@@ -13,7 +13,7 @@ $cover = $_FILES['cover']['name'];
 $tmp = $_FILES['cover']['tmp_name'];
 
 if($cover) {
-	move_uploaded_file($tmp, "covers/$cover");
+	move_uploaded_file($tmp, "covers/$title");
 	
 	$sql = "UPDATE books SET title='$title', author='$author',
 			summary='$summary', price='$price', category_id='$category_id',
