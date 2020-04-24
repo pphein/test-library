@@ -13,7 +13,7 @@ $cover = $_FILES['cover']['name'];
 $tmp = $_FILES['cover']['tmp_name'];
 
 if($cover) {
-	move_uploaded_file($tmp, "covers/$title");
+	move_uploaded_file($tmp, "covers/$title.png");
 	
 	$sql = "UPDATE books SET title='$title', author='$author',
 			summary='$summary', price='$price', category_id='$category_id',
@@ -24,7 +24,7 @@ if($cover) {
 				modified_date=now() WHERE id=$id";
 }
 
-mysqli_query($sql);
+mysqli_query($conn,$sql);
 
 header("location: book-list.php");
 
