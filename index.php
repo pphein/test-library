@@ -204,7 +204,7 @@
  							<a href="admin/books/<?php echo $row['title']; ?>.pdf"><i>read more</i></a>
  						</div>
  						
- 						<div class="comment">
+ 						<div class="comment-cotent">
  							
 	 							<?php 
 
@@ -221,10 +221,10 @@
 	 																
 	 								
 	 						
- 						</div>  	 						
+ 						 	 						
 
  						
- 						<div class="comment">
+ 						
 
  							<form class="comment" action="comment.php?id=<?php echo $row_id ?>" method="post">
 

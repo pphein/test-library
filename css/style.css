@@ -122,6 +122,7 @@ ul.books li {
 }
 ul.books li div.info{
 	float: left;
+	padding-right: 50px;
 }
 ul.books b {
 	display: block;
@@ -246,6 +247,8 @@ a{
 	text-decoration: none;
 }
 
-div.comment input.button {
-	border-style: circle;
+div.comment-cotent{
+	
+	float: left;
+	
 }
