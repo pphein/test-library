@@ -38,21 +38,11 @@
 					"SELECT * FROM
 					books " 
 				)	;
-			/*$result = mysql_query("
-				SELECT books.*, Categories.*
-				FROM books LEFT JOIN Categories 
-				ON books.id = Categories.id
-				ORDER BY books.created_date DESC
-			");		*/
-			 //die(var_dump($result));
-		 ?>
+			?>
 
 		 <ul class="books">
-
 		 	<?php while($row = mysqli_fetch_assoc($result)): ?>
-
 		 		<li>
-
 		 			<img src="covers/<?php echo $row['cover'] ?>" 
 		 				alt="" align="right" height="140">
 
@@ -66,14 +56,9 @@
 
 
 		 			[ <a href="book-edit.php?id=<?php echo $row['id']; ?>">edit</a> ]
-
 		 		</li>
-
-		 	<?php endwhile; ?>
-		 	
-		 </ul>
-
-		 
+		 	<?php endwhile; ?>		 	
+		 </ul>	 
 	
 	</body>
 </html>

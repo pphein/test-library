@@ -67,21 +67,12 @@
 							<i>ပြန်အပ်ရက်စွဲ : <?php  $date = strtotime("+7 day",$date); echo date('d-m-Y', $date);  ?>  </i>
 							
 							<a href="back-book.php?id=<?php echo $item['book_id']; ?>">
-
-					 			<button>Return</button>
-
-					 		
-					 		
+					 			<button>Return</button>				 		
 					 		</a>
-
-
-
 						</b>
 					<?php endwhile; ?>
 				</div>
 			</li>
-
-
 			<?php endwhile; ?>
 		</ul>
 	

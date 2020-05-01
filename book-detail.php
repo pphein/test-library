@@ -27,32 +27,30 @@
 
 		 	<p> <?php echo $row['summary'] ?> </p>
 
-		 	<?php 
+		 	<?php  								
 
- 								
+				$row_id = $row['id'];
 
- 								$row_id = $row['id'];
+				$ordered_book = mysqli_query($conn,"SELECT *
+	 					FROM order_items LEFT JOIN books ON order_items.book_id = books.id
+	 					WHERE order_items.book_id = $row_id");
+				$ordered = mysqli_fetch_assoc($ordered_book);
+				
 
- 								$ordered_book = mysqli_query($conn,"SELECT *
-						 					FROM order_items LEFT JOIN books ON order_items.book_id = books.id
-						 					WHERE order_items.book_id = $row_id");
- 								$ordered = mysqli_fetch_assoc($ordered_book);
- 								
+				$tmp_book = mysqli_query($conn, "SELECT * FROM tmp_book_items WHERE tmp_book_id = $row_id");
+				$tmp = mysqli_fetch_assoc($tmp_book);
 
- 								$tmp_book = mysqli_query($conn, "SELECT * FROM tmp_book_items WHERE tmp_book_id = $row_id");
- 								$tmp = mysqli_fetch_assoc($tmp_book);
-
- 								?>
- 								<?php if($row_id == $ordered['book_id']): ?>
- 									<b>Borrowed</b>
- 								<?php elseif($row_id == $tmp['tmp_book_id']): ?>
- 									<b>Chosen</b>
- 								<?php elseif($cart >= 3): ?>
- 									<b>You're Limited</b>
- 								<?php else: ?>
- 									
- 									<b><a href="add-to-cart.php?id=<?php echo $row['id'] ?>" class="add-to-cart">Click to Borrow</a></b>
- 								<?php endif; ?>
+				?>
+				<?php if($row_id == $ordered['book_id']): ?>
+					<b>Borrowed</b>
+				<?php elseif($row_id == $tmp['tmp_book_id']): ?>
+					<b>Chosen</b>
+				<?php elseif($cart >= 3): ?>
+					<b>You're Limited</b>
+			<?php else: ?>
+					
+					<b><a href="add-to-cart.php?id=<?php echo $row['id'] ?>" class="add-to-cart">Click to Borrow</a></b>
+			<?php endif; ?>
 
 		 </div>
 

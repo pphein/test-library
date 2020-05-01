@@ -17,30 +17,19 @@
 		</ul>
 
 		<a href="cat-new.php" class="new">New Category</a>
-
 		
-		<?php 
-
+		<?php
 			include ("confs/config.php");
-
 			$result = mysqli_query($conn, "SELECT * FROM Categories");
 		 ?>
-
-		 <ul>
-		 	
+		 <ul>		 	
 		 	<?php while($row = mysqli_fetch_assoc($result)): ?>
-
 		 		<li title=" <?php echo $row['remark'] ?> ">
 		 			[ <a href="cat-del.php?id=<?php echo $row['id']; ?> " class="del">del</a> ]
 		 			[ <a href="cat-edit.php?id=<?php echo $row['id']; ?> " class="edit">edit</a> ]
 		 			<?php echo $row['name'] ?>
 		 		</li>
-
 		 	<?php endwhile; ?>
-
 		 </ul>
-
-		 
-
 	</body>
 </html>

@@ -14,7 +14,6 @@
 			$row = mysqli_fetch_assoc($result);
 
 		?>
-
 		<h1>Edit Book</h1>
 		<ul class="menu">
 			<li><a href="book-list.php">Manage Books</a></li>
@@ -22,7 +21,6 @@
 			<li><a href="orders.php">Manage Order</a></li>
 			<li><a href="logout.php">Logout</a></li>
 		</ul>
-
 
 		<form action="book-update.php" method="post" enctype="multipart/form-data">
 			

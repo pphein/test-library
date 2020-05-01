@@ -1,52 +1,29 @@
 <?php 
+	session_start();
+	include ("admin/confs/config.php");
 
-session_start();
-include ("admin/confs/config.php");
+	$name = $_POST['name'];
+	$email = $_POST['email'];
+	$phone = $_POST['phone'];
+	$adress = $_POST['adress'];
 
+	$order = mysqli_query($conn, "INSERT INTO orders 
+				(name, email, phone, adress, status, created_date, modified_date)
+				VALUES ('$name', '$email', '$phone', '$adress', 0, now(), now() ) ");
 
+	$order_id = mysqli_insert_id($conn);
 
-$name = $_POST['name'];
-$email = $_POST['email'];
-$phone = $_POST['phone'];
-$adress = $_POST['adress'];
+	foreach ($_SESSION['cart'] as $id => $qty) {
+		$books = mysqli_query($conn, "SELECT * FROM books WHERE id = $id");
 
+		$title = mysqli_fetch_assoc($books);
+		$bookname = $title['title'];
+		
+	$confirm = mysqli_query($conn, "INSERT INTO order_items 
+					(book_id, order_id, bookname, qty) VALUES ('$id', '$order_id', '$bookname', '$qty') ");
+	}
 
-
-
-$order = mysqli_query($conn, "INSERT INTO orders 
-			(name, email, phone, adress, status, created_date, modified_date)
-			VALUES ('$name', '$email', '$phone', '$adress', 0, now(), now() ) ");
-
-
-
-$order_id = mysqli_insert_id($conn);
-
-
-
-
-foreach ($_SESSION['cart'] as $id => $qty) {
-
-	$books = mysqli_query($conn, "SELECT * FROM books WHERE id = $id");
-
-	$title = mysqli_fetch_assoc($books);
-	$bookname = $title['title'];
-
-	
-$confirm = mysqli_query($conn, "INSERT INTO order_items 
-				(book_id, order_id, bookname, qty) VALUES ('$id', '$order_id', '$bookname', '$qty') ");
-
-
-
-}
-
-
-
-
-
-
-
-unset($_SESSION);
-
+	unset($_SESSION);
  ?>
 
  <!DOCTYPE html>
@@ -55,8 +32,7 @@ unset($_SESSION);
  		<title>Order Submitted</title>
  		<link rel="stylesheet" type="text/css" href="css/style.css">
  	</head>
- 	<body>
- 		
+ 	<body> 		
  		<h1>Order Submitted</h1>
 
  		<div class="msg">

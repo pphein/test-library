@@ -21,8 +21,6 @@
 			<li><a href="orders.php">Manage Order</a></li>
 			<li><a href="logout.php">Logout</a></li>
 		</ul>
-
-
 		<?php 
 
 			include "confs/config.php";

@@ -1,45 +1,32 @@
-<?php 
+<?php
+	session_start();
+	include ("admin/confs/config.php");
 
-session_start();
-
-include ("admin/confs/config.php");
-
-if(isset($_GET['cart'])){
-	$cart = $_GET['cart'];
-}
-else
-{
-$cart = 0;
-if(isset($_SESSION['cart'])){
-	foreach($_SESSION['cart'] as $qty) {
-		$cart += $qty;
-
+	if(isset($_GET['cart'])){
+		$cart = $_GET['cart'];
+	}else{
+		$cart = 0;
+		if(isset($_SESSION['cart'])){
+			foreach($_SESSION['cart'] as $qty) {
+				$cart += $qty;
+			}
+		}
 	}
 
-
-
-}
-}
-
-
-if (isset($_SESSION['cmt'])) {
-	foreach ($_SESSION['cmt'] as $cmt_qty) {
-		$cmt += $cmt_qty;
+	if (isset($_SESSION['cmt'])) {
+		foreach ($_SESSION['cmt'] as $cmt_qty) {
+			$cmt += $cmt_qty;
+		}
 	}
-}
-if(isset($_GET['cat'])){
-	$cat_id = $_GET['cat'];
-	$books  = mysqli_query($conn, "SELECT * FROM books WHERE Category_id = $cat_id");
-}else {
-	$books = mysqli_query($conn, "SELECT * FROM books  ORDER BY `id` DESC");
-}
 
-$cats = mysqli_query($conn, "SELECT * FROM Categories");
-
- ?>
-
-
-
+	if(isset($_GET['cat'])){
+		$cat_id = $_GET['cat'];
+		$books  = mysqli_query($conn, "SELECT * FROM books WHERE Category_id = $cat_id");
+	}else {
+		$books = mysqli_query($conn, "SELECT * FROM books  ORDER BY `id` DESC");
+	}
+	$Categories = mysqli_query($conn, "SELECT * FROM Categories");
+?>
 
 <!DOCTYPE html>
  <meta utf="8">
@@ -49,52 +36,29 @@ $cats = mysqli_query($conn, "SELECT * FROM Categories");
  		<link rel="stylesheet" type="text/css" href="css/style.css">
  	</head>
  	<body>
-
  		<h1> Library</h1>
  		<div class="header">
- 			<h2>Welcome From Library :-) </h2>
-
- 			<form class="search" action="search.php" method="get">
-
- 				<label>
-
- 				
- 					<input type="text" name="keywords" autocomplete="off" placeholder= "Type book or author or words">
-
-
- 				</label>
-
- 				<input class="button" type="submit" value="search">
- 			
+ 			<h2>Welcome From Library :-)</h2>
+ 			<form class="search" action="search.php" method="post">
+ 				<label>Search</label> 				
+ 				<input type="text" name="keywords" autocomplete="off" placeholder= "Type book or author or words">
+ 				<input class="button" type="submit" value="search"> 			
  			</form>
 
+ 			<div class="info"> 			
+				You have borrowed( <?php echo $cart; ?> ) books. <br>
+			
+				<?php if ($cart >0): ?>
+					<a href="view-cart.php">Click to deliver. :-)</a>			
+				<?php endif; ?>
 
- 			<div class="info">
- 			
- 			
- 					You have borrowed( <?php echo $cart; ?> ) books. <br>
- 				
- 					<?php if ($cart >0): ?>
- 					<a href="view-cart.php">Click to deliver. :-)</a>
- 				
- 					<?php endif; ?>
- 					<br>
+				<br>
 
- 				<b class="limit">
- 				
- 					<?php if ($cart >= 3) {
- 						echo "Limited";
- 						} 
- 					?>
-
- 				</b>
- 			
-
+ 				<b class="limit"><?php if ($cart >= 3) { echo "Limited"; } ?></b>
  			</div>
  		</div>
 
- 	    <div class="sidebar">
- 			
+ 	    <div class="sidebar"> 			
  			<ul class="cats">
  				<li>
  					<b><a href="index.php">All Categories</a></b>
@@ -107,45 +71,28 @@ $cats = mysqli_query($conn, "SELECT * FROM Categories");
  						</a>
  					</li>
  				<?php endwhile; ?>
-
  			</ul>
-
  		</div>
 
+ 		<?php
+ 			$keywords = $_POST['keywords'];
+ 			$keywords = strip_tags($keywords); 				
 
- 		<?php 
- 		
+	 		if(isset($keywords)){
+	 			
+	 			$query = "SELECT * FROM books
+						WHERE author LIKE '%{$keywords}%'
+						OR summary LIKE '%{$keywords}%'
+						OR title LIKE '%{$keywords}%'";
 
- 		$keywords = $_GET['keywords'];
-
- 		$keywords = strip_tags($keywords);
-
- 				
-
- 		if($keywords == ""){
- 			echo "type what search";
- 		}
- 		else
- 		{
-
- 		$query = "SELECT *
-					FROM books
-					WHERE author LIKE '%{$keywords}%'
-					OR summary LIKE '%{$keywords}%'
-					OR title LIKE '%{$keywords}%'";
-
- 		$result = mysqli_query($conn, $query);
- 		
- 		}
-
+	 			$result = mysqli_query($conn, $query);	 		
+	 		}else{ 
+	 			header("location: index.php");
+	 		}
 		?>
 		<br>
-
 		<div class="result-count">
-
 			<b>Found <?php echo $result->num_rows; ?> results.</b>
-
-
 		</div>
 		
 		<?php while ($r = $result->fetch_object()) : ?>
