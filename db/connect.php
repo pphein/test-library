@@ -1,10 +1,10 @@
 <?php 
 
 
-$db = new mysqli('localhost', 'root', 'pph312php', 'store');
+$db = new mysqli('localhost', 'root', '', 'library');
 
 if($db->connect_error){
-	die("Connection failed: " .$db->connect_error );
+	die("Connection failed: ");
 }
 
  ?>

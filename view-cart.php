@@ -2,6 +2,10 @@
 	session_start();
 	include ("admin/confs/config.php");
 
+    $user_id = $_SESSION['id'];
+    var_dump($user_id);
+    //die();
+
 	$cart = 0;
 	if(isset($_SESSION['cart'])){
 		foreach($_SESSION['cart'] as $qty) {
@@ -17,71 +21,81 @@
 
 <!DOCTYPE html>
 <html>
-	<head>
-		<title></title>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-	</head>
-	<body>		
-		<h1>View Cart</h1>
 
-		<div class="sidebar">			
-			<ul class="cats">
-				<li><a href="index.php?cart=<?php echo $cart; ?>">&laquo; Continue Shoping</a></li>
-				<li><a href="clear-cart.php" class="del">&times; Clear Cart</a></li>
-			</ul>
-		</div>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
 
-		<div class="main">			
-			<div class="order-form">				
-				<h2>Order Now</h2>
-				<h3>You will borrow ( <?php echo $cart; ?> )  book<?php  if($cart > 1){echo "s";} ?>.</h3>			
+<body>
+    <h1>View Cart</h1>
 
-				<form action="submit-order.php" method="post">
-					<table>
-					<?php if(isset($_SESSION['cart'])): ?>
-						<?php 
-							foreach($_SESSION['cart'] as $id=>$qty):
+    <div class="sidebar">
+        <ul class="cats">
+            <li><a href="index.php?cart=<?php echo $cart; ?>">&laquo; Continue Shoping</a></li>
+            <!-- <li><a href="clear-cart.php" class="del">&times; Clear Cart</a></li> -->
+        </ul>
+    </div>
+
+    <div class="main">
+        <div class="order-form">
+            <h2>Order Now</h2>
+            <h3>You will borrow ( <?php echo $cart; ?> ) book<?php  if($cart > 1){echo "s";} ?>.</h3>
+
+            <form action="submit-order.php" method="post">
+                <table>
+                    <?php $tmp = mysqli_query($conn, "SELECT * FROM tmp_book_items WHERE  user_id = $user_id");  ?>
+
+                    <?php 
+							while($tmp_book_id = mysqli_fetch_assoc($tmp)):
 							
-								$tmp = mysqli_query($conn, "SELECT * FROM tmp_book_items WHERE tmp_book_items.tmp_book_id = $id");
-								$tmp_book_id = mysqli_fetch_assoc($tmp); ?>
+								 ?>
 
-						 	<tr>
-						 		<li>
-									<label for="bookname">Book Name</label>
-									<input type="text" name="bookname" id="bookname" value="<?php echo $tmp_book_id['tmp_book_id']; ?> <?php echo $tmp_book_id['tmp_book_title']; ?>  ">				
-							 	
-							 		<a href="clear-book.php?id=<?php echo $tmp_book_id['tmp_book_id']; ?>"><?php if ($tmp_book_id['id']) { echo "x clear"; }?></a>
-							 	</li>
-							</tr>
 
-						<?php endforeach; ?>
-					<?php endif; ?>
-					<table>
-										
-					<label for="name">Your Name</label>
-					<input type="text" name="name" id="name">
 
-					<label for="email">Email</label>
-					<input type="text" name="email" id="email">
+                    <tr>
+                        <li>
+                            <label for="bookname">Book Name</label>
+                            <input type="text" name="bookname" id="bookname"
+                                value="<?php echo $tmp_book_id['tmp_book_title']; ?>  ">
 
-					<label for="phone">Phone</label>
-					<input type="text" name="phone" id="phone">
+                            <a
+                                href="clear-book.php?id=<?php echo $tmp_book_id['tmp_book_id']; ?>"><?php if ($tmp_book_id['id']) { echo "x clear"; }?></a>
+                        </li>
+                    </tr>
 
-					<label for="adress">Address</label>
-					<textarea name="adress" id="address"></textarea>
+                    <?php endwhile; ?>
 
-					<br><br>
-					<input type="submit" value="Submit Order">
+                    <table>
+                        <?php $user_info = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE ID = $user_id"));?>
 
-					<a href="index.php?cart=<?php echo $cart;?>">Continue Shopping</a>
+                        <label for="name">Your Name</label>
+                        <input type="text" name="name" id="name" value="<?php echo $user_info['name']; ?>"
+                            placeholder="<?php echo $user_info['name']; ?>">
 
-				</form>
-			</div>
-		</div>
+                        <label for="email">Email</label>
+                        <input type="text" placeholder="<?php echo $user_info['email']; ?>" name="email" id="email"
+                            value="<?php echo $user_info['email']; ?>">
 
-		<div class="footer">
-			&copy; <?php echo date("Y") ?>. All right reserved.
-		</div>
+                        <label for="phone">Phone</label>
+                        <input type="text" name="phone" id="phone">
 
-	</body>
+                        <label for="adress">Address</label>
+                        <textarea name="adress" id="address"></textarea>
+
+                        <br><br>
+                        <input type="submit" value="Submit Order">
+
+                        <a href="index.php?cart=<?php echo $cart;?>">Continue Shopping</a>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; <?php echo date("Y") ?>. All right reserved.
+    </div>
+
+</body>
+
 </html>

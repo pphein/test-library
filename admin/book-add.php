@@ -12,7 +12,7 @@
 	$tmp = $_FILES['cover']['tmp_name'];
 
 	if($cover) {
-		move_uploaded_file($tmp, "books/$title.png");
+		move_uploaded_file($tmp, "covers/$title.png");
 	}
 
 	//ဖိုင်နာမည်တူမတူစစ်ပြီး ရှိရင် copy- ခံပြီးမှ upload
@@ -32,15 +32,48 @@
 		move_uploaded_file($tmp, "books/$title.pdf");
 	}
 
-	$sql = "INSERT INTO books (
+	if($book && $cover){
+		$sql = "INSERT INTO books (
 			title, author, summary, price, category_id, 
 			cover, book, created_date,  modified_date
 			) VALUES (
 			'$title', '$author', '$summary', '$price', '$category_id', 
-			'$cover', '$book', now(), now()
+			'$title.png', '$title.pdf', now(), now()
 			) ";
 
+			
+	}elseif($book){
+		$sql = "INSERT INTO books (
+			title, author, summary, price, category_id, 
+			 book, created_date,  modified_date
+			) VALUES (
+			'$title', '$author', '$summary', '$price', '$category_id', 
+			 '$title.pdf', now(), now()
+			) ";
+			
+	}elseif($cover){
+		$sql = "INSERT INTO books (
+			title, author, summary, price, category_id, 
+			cover, created_date,  modified_date
+			) VALUES (
+			'$title', '$author', '$summary', '$price', '$category_id', 
+			'$title.png', now(), now()
+			) ";
+			
+	}else{
+		$sql = "INSERT INTO books (
+			title, author, summary, price, category_id, 
+			  created_date,  modified_date
+			) VALUES (
+			'$title', '$author', '$summary', '$price', '$category_id', 
+			 now(), now()
+			) ";
+		
+	}
+	
+
 	mysqli_query($conn, $sql);
+	
 
 	header("location: book-list.php");
 

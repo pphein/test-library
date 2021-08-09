@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title></title>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-	</head>
-	<body>
 
-		<h1>Login to Book Store Administration</h1>
+<head>
+    <meta utf="8" lang="myan">
 
-		<form action="login.php" method="post">
-			
-			<label for="name">Name</label>
-			<input type="text" id="name" name="name">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
 
-			<label for="password">Password</label>
-			<input type="password" id="password" name="password">
+<body>
 
-			<br><br>
-			<input type="submit" value="Admin Login">
+    <h1>Login to Book Store Administration</h1>
 
-		</form>
-	
-	</body>
+    <form action="login.php" method="post">
+
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name">
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password">
+
+        <br><br>
+        <input type="submit" value="Admin Login">
+
+    </form>
+
+</body>
+
 </html>

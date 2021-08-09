@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title></title>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-	</head>
-	<body>
 
-		<?php 
+<head>
+    <meta utf="8" lang="myan">
+
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+
+    <?php 
 			include "confs/config.php";
 
 			$id = $_GET['id'];
@@ -14,63 +18,70 @@
 			$row = mysqli_fetch_assoc($result);
 
 		?>
-		<h1>Edit Book</h1>
-		<ul class="menu">
-			<li><a href="book-list.php">Manage Books</a></li>
-			<li><a href="cat-list.php">Manage Categories</a></li>
-			<li><a href="orders.php">Manage Order</a></li>
-			<li><a href="logout.php">Logout</a></li>
-		</ul>
+    <h1>Edit Book</h1>
+    <ul class="menu">
+        <li><a href="book-list.php">Manage Books</a></li>
+        <li><a href="cat-list.php">Manage Categories</a></li>
+        <li><a href="orders.php">Manage Order</a></li>
+        <li><a href="logout.php">Logout</a></li>
+        <li><a href="../index.php">Home Page</a></li>
 
-		<form action="book-update.php" method="post" enctype="multipart/form-data">
-			
-			<input type="hidden" name="id" value="<?php echo $row['id'] ?>">
+    </ul>
 
-			<label for="title">Book Title</label>
-			<input type="text" name="title" id="title" value="<?php echo $row['title'] ?> ">
+    <form action="book-update.php" method="post" enctype="multipart/form-data">
 
-			<label for="author">Author</label>
-			<input type="text" name="author" id="author" value="<?php echo $row['author'] ?>">
+        <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
 
-			<label for="summary">Summary</label>
-			<textarea name="summary" id="summary"> <?php echo $row['summary'] ?> </textarea>
+        <label for="title">Book Title</label>
+        <input type="text" name="title" id="title" value="<?php echo $row['title'] ?> ">
 
-			<label for="price">Price</label>
-			<input type="text" name="price" id="price" value="<?php echo $row['price'] ?>">
+        <label for="author">Author</label>
+        <input type="text" name="author" id="author" value="<?php echo $row['author'] ?>">
 
-			<label for="categories">Category</label>
-			
-			<select name="category_id" id="categories">
-				
-				<option value="0">-- Choose --</option>
-				
-				<?php 
+        <label for="summary">Summary</label>
+        <textarea name="summary" id="summary"> <?php echo $row['summary'] ?> </textarea>
+
+        <label for="price">Price</label>
+        <input type="text" name="price" id="price" value="<?php echo $row['price'] ?>">
+
+        <label for="categories">Category</label>
+
+        <select name="category_id" id="categories">
+
+            <option value="0">-- Choose --</option>
+
+            <?php 
 					include "confs/config.php";
-					$categories = mysqli_query($conn,"SELECT id, name FROM Categories");
+					$categories = mysqli_query($conn,"SELECT id, name FROM categories");
 					while($cat = mysqli_fetch_assoc($categories)):
 				 ?>
-					<option value="<?php echo $cat['id'] ?>"
-						<?php if($cat['id'] == $row['category_id']) echo "selected"; ?> >
+            <option value="<?php echo $cat['id'] ?>" <?php if($cat['id'] == $row['category_id']) echo "selected"; ?>>
 
-						<?php echo $cat['name']; ?>
-					
-					</option>
+                <?php echo $cat['name']; ?>
 
-				<?php endwhile; ?>
+            </option>
 
-			</select>
+            <?php endwhile; ?>
 
-			<br><br>
-			<img src="covers/<?php echo $row['cover'] ?>" alt="" height=150>
+        </select>
 
-			<label for="cover">Change Cover</label>
-			<input type="file" name="cover" id="cover">
+        <br><br>
 
-			<br><br>
-			<input type="submit" value="Update Book">
-			<a href="book-list.php">Back</a>
 
-		</form>
-	
-	</body>
+        <label for="cover">Change Cover</label>
+        <input type="file" name="cover" id="cover">
+
+
+        <label for="book">Book</label>
+        <input type="file" name="book" id="book">
+        <br><br>
+
+        <br><br>
+        <input type="submit" value="Update Book">
+        <a href="book-list.php">Back</a>
+
+    </form>
+
+</body>
+
 </html>

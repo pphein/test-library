@@ -21,60 +21,62 @@
 
 	if(isset($_GET['cat'])){
 		$cat_id = $_GET['cat'];
-		$books  = mysqli_query($conn, "SELECT * FROM books WHERE Category_id = $cat_id");
+		$books  = mysqli_query($conn, "SELECT * FROM books WHERE category_id = $cat_id");
 	}else {
 		$books = mysqli_query($conn, "SELECT * FROM books  ORDER BY `id` DESC");
 	}
-	$Categories = mysqli_query($conn, "SELECT * FROM Categories");
+	$Categories = mysqli_query($conn, "SELECT * FROM categories");
 ?>
 
 <!DOCTYPE html>
- <meta utf="8">
- <html>
- 	<head>
- 		<title>Book Store</title>
- 		<link rel="stylesheet" type="text/css" href="css/style.css">
- 	</head>
- 	<body>
- 		<h1> Library</h1>
- 		<div class="header">
- 			<h2>Welcome From Library :-)</h2>
- 			<form class="search" action="search.php" method="post">
- 				<label>Search</label> 				
- 				<input type="text" name="keywords" autocomplete="off" placeholder= "Type book or author or words">
- 				<input class="button" type="submit" value="search"> 			
- 			</form>
+<meta utf="8">
+<html>
 
- 			<div class="info"> 			
-				You have borrowed( <?php echo $cart; ?> ) books. <br>
-			
-				<?php if ($cart >0): ?>
-					<a href="view-cart.php">Click to deliver. :-)</a>			
-				<?php endif; ?>
+<head>
+    <title>Book Store</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
 
-				<br>
+<body>
+    <h1> Library</h1>
+    <div class="header">
+        <h2>Welcome From Library :-)</h2>
+        <form class="search" action="search.php" method="post">
+            <label>Search</label>
+            <input type="text" name="keywords" autocomplete="off" placeholder="Type book or author or words">
+            <input class="button" type="submit" value="search">
+        </form>
 
- 				<b class="limit"><?php if ($cart >= 3) { echo "Limited"; } ?></b>
- 			</div>
- 		</div>
+        <div class="info">
+            You have borrowed( <?php echo $cart; ?> ) books. <br>
 
- 	    <div class="sidebar"> 			
- 			<ul class="cats">
- 				<li>
- 					<b><a href="index.php">All Categories</a></b>
- 				</li>
+            <?php if ($cart >0): ?>
+            <a href="view-cart.php">Click to deliver. :-)</a>
+            <?php endif; ?>
 
- 				<?php while($row = mysqli_fetch_assoc($cats)): ?>
- 					<li>
- 						<a href="index.php?cat=<?php echo $row['id'] ?>">
- 							<?php echo $row['name'] ?>
- 						</a>
- 					</li>
- 				<?php endwhile; ?>
- 			</ul>
- 		</div>
+            <br>
 
- 		<?php
+            <b class="limit"><?php if ($cart >= 3) { echo "Limited"; } ?></b>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <ul class="cats">
+            <li>
+                <b><a href="index.php">All Categories</a></b>
+            </li>
+
+            <?php while($row = mysqli_fetch_assoc($cats)): ?>
+            <li>
+                <a href="index.php?cat=<?php echo $row['id'] ?>">
+                    <?php echo $row['name'] ?>
+                </a>
+            </li>
+            <?php endwhile; ?>
+        </ul>
+    </div>
+
+    <?php
  			$keywords = $_POST['keywords'];
  			$keywords = strip_tags($keywords); 				
 
@@ -90,38 +92,39 @@
 	 			header("location: index.php");
 	 		}
 		?>
-		<br>
-		<div class="result-count">
-			<b>Found <?php echo $result->num_rows; ?> results.</b>
-		</div>
-		
-		<?php while ($r = $result->fetch_object()) : ?>
+    <br>
+    <div class="result-count">
+        <b>Found <?php echo $result->num_rows; ?> results.</b>
+    </div>
 
-			<div class="main">
-				<ul class="books">
-					<li>
-						
-						<div class="info">
-	 								<img src="admin/covers/<?php echo $r->cover ?>" height= "150"><br>
+    <?php while ($r = $result->fetch_object()) : ?>
 
-	 								<b>
-	 									<a href="#"><?php echo $r->title; ?></a><br>
-	 									<i><?php echo $r->author; ?></i><br>
+    <div class="main">
+        <ul class="books">
+            <li>
 
-	 									<a href="admin/books/<?php echo $r->title; ?>.pdf">To read</a>
-	 								</b><br>
+                <div class="info">
+                    <img src="admin/covers/<?php if($r->cover){ echo $r->cover;}else{echo "a.png";} ?>"
+                        height="150"><br>
 
-	 								<b> Price::$  <?php echo $r->price;  ?> </b>
-	 								<p> 
-	 								
-	 									created-date:
-	 										<?php echo $r->created_date; ?><br>
-	 									Book-NO.:<?php echo $r->id; ?>
-	 								</p>
+                    <b>
+                        <a href="#"><?php echo $r->title; ?></a><br>
+                        <i><?php echo $r->author; ?></i><br>
 
-	 								<b class="state">
- 								
-			 							<?php 
+                        <a href="admin/books/<?php if($r->book){echo $r->book;}else{echo "a.pdf";} ?>">To read</a>
+                    </b><br>
+
+                    <b> Price::$ <?php echo $r->price;  ?> </b>
+                    <p>
+
+                        created-date:
+                        <?php echo $r->created_date; ?><br>
+                        Book-NO.:<?php echo $r->id; ?>
+                    </p>
+
+                    <b class="state">
+
+                        <?php 
 
 			 								
 
@@ -136,39 +139,40 @@
 			 								$tmp = mysqli_fetch_assoc($tmp_book);
 
 			 							?>
-			 							<?php if(isset($row_id) || isset($ordered['book_id'])) : ?>
-			 							<?php if($row_id == $ordered['book_id']): ?>
-			 									Borrowed 
-			 							<?php elseif($row_id == $tmp['tmp_book_id']): ?>
-			 									Chosen
-			 							<?php elseif($cart >= 3): ?>
-			 									You're Limited
-			 							<?php else: ?>
-			 									
-			 									<a href="add-to-cart.php?id=<?php echo $row_id ?>" class="add-to-cart">Click to Borrow</a>
-			 							<?php endif; ?>
-			 							<?php endif; ?>
-			 						</b>					
-			
-		 						</div>
+                        <?php if(isset($row_id) || isset($ordered['book_id'])) : ?>
+                        <?php if($row_id == $ordered['book_id']): ?>
+                        Borrowed
+                        <?php elseif($row_id == $tmp['tmp_book_id']): ?>
+                        Chosen
+                        <?php elseif($cart >= 3): ?>
+                        You're Limited
+                        <?php else: ?>
 
-		 						<div class="words">
-		 							<p>
-		 								<?php echo $r->summary; ?>
-		 							</p>
-		 							<br>
-		 							<a href="admin/books/<?php echo $r->title; ?>.pdf"><i>read more</i></a>
-		 						</div>
-					</li>
-				</ul>
-			</div>
+                        <a href="add-to-cart.php?id=<?php echo $row_id ?>" class="add-to-cart">Click to Borrow</a>
+                        <?php endif; ?>
+                        <?php endif; ?>
+                    </b>
 
-		<?php endwhile; ?>
+                </div>
 
-	
- 		<div class="footer">
- 			&copy; <?php echo date("Y") ?>. All right reserved.
- 		</div>
- 	
- 	</body>
- </html>
+                <div class="words">
+                    <p>
+                        <?php echo $r->summary; ?>
+                    </p>
+                    <br>
+                    <a href="admin/books/<?php if($r->book){echo $r->book;}else{echo "a.pdf";} ?>"><i>read more</i></a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <?php endwhile; ?>
+
+
+    <div class="footer">
+        &copy; <?php echo date("Y") ?>. All right reserved.
+    </div>
+
+</body>
+
+</html>

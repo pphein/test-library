@@ -6,7 +6,7 @@
 	$tmpdel =mysqli_query($conn, "DELETE FROM tmp_book_items WHERE 
 				`tmp_book_items`.`tmp_book_id`= $id ");
 
-	unset($_SESSION['cart'][$id]);
+	$_SESSION['cart'][$id]--;
 
 	header("location: view-cart.php");
   ?>

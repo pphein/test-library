@@ -10,36 +10,38 @@
 	}
 	if(isset($_GET['cat'])){
 		$cat_id = $_GET['cat'];
-		$books  = mysqli_query("SELECT * FROM books WHERE Category_id = $cat_id");
+		$books  = mysqli_query($conn, "SELECT * FROM books WHERE category_id = $cat_id");
 	}else {
-		$books = mysqli_query("SELECT * FROM books");
+		$books = mysqli_query($conn, "SELECT * FROM books");
 	}
 
-	$cats = mysqli_query("SELECT * FROM Categories");
+	$cats = mysqli_query($conn, "SELECT * FROM categories");
 
 ?>
 
 <!DOCTYPE html>
- <meta utf="8">
- <html>
- 	<head>
- 		<title>Book Store</title>
- 		<link rel="stylesheet" type="text/css" href="css/style.css">
- 	</head>
- 	<body>
+<meta utf="8">
+<html>
 
- 		<h1>Book Store</h1>
- 		<a href="book-list.php">"back"</a>
+<head>
+    <title>Book Store</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
 
- 		<form action="search.php" method="get">
+<body>
 
- 			<label>search</label> 				
- 			<input type="text" name="keywords" autocomplete="off">	
+    <h1>Book Store</h1>
+    <a href="book-list.php">"back"</a>
 
- 			<input type="submit" value="search">
- 		</form>
+    <form action="search.php" method="get">
 
- 		<?php require_once '../db/connect.php';
+        <label>search</label>
+        <input type="text" name="keywords" autocomplete="off">
+
+        <input type="submit" value="search">
+    </form>
+
+    <?php require_once '../db/connect.php';
 
 			if(isset($_GET['keywords'])) {
 
@@ -55,56 +57,59 @@
 
 					");
 		?>
-		<div class="result-count">
-			Found <?php echo $query->num_rows; ?> results.
-		</div>		
+    <div class="main">
+        <div class="result-count">
+            Found <?php echo $query->num_rows; ?> results.
+        </div>
 
-		<?php 
+        <?php 
 
 			if ($query->num_rows) {
 
 				while ($r = $query->fetch_object()) { ?>
-						
-					<div class="detail">						
-						<ul class="books">		
 
-							<li>
-								<img src="admin/covers/<?php echo $r->cover ?>" height= "150">
+        <div class="detail">
+            <ul class="books">
 
-								<b>
-									<a href="#"><?php echo $r->title; ?></a><br>
-									<i><?php echo $r->author; ?></i>
+                <li>
+                    <img src="covers/<?php if($r->cover){ echo $r->cover;}else{echo "a.png";} ?>" height="150"> <br>
+                    <a
+                        href="books/<?php if($r->book){echo $r->book;}else{echo "a.pdf";} ?>"><?php echo $r->title; ?></a><br>
+                    <i><?php echo $r->author; ?></i>
 
-									<a href="admin/books/<?php echo $r->title; ?>.pdf">To read</a>
-								</b>
+                    <a href="books/<?php if($r->book){echo $r->book;}else{echo "a.pdf";} ?>">To read</a>
 
-								<i> $ price </i>
-								<p> 
-									Summary <br>
-									<?php echo $r->summary; ?><br>
-									created-date:
-									<?php echo $r->created_date; ?><br>
-									<?php echo $r->id; ?><br>
-									[ <a href="book-del.php?id=<?php echo $row['id']; ?>">del</a> ]
+                    </br>
+
+                    <i> $ price </i>
+                    <p>
+                        Summary <br>
+                        <?php echo $r->summary; ?><br>
+                        created-date:
+                        <?php echo $r->created_date; ?><br>
+                        <?php echo $r->id; ?><br>
+                        [ <a href="book-del.php?id=<?php echo $row['id']; ?>">del</a> ]
 
 
-		 						[ <a href="book-edit.php?id=<?php echo $row['id']; ?>">edit</a> ]
-								</p>
+                        [ <a href="book-edit.php?id=<?php echo $row['id']; ?>">edit</a> ]
+                    </p>
 
-							</li>
-						</ul>
-					</div>			
+                </li>
+            </ul>
+        </div>
+    </div>
 
-				<?php 
+    <?php 
 			}			
 		}
 	}
 
 ?>
-	
- 		<div class="footer">
- 			&copy; <?php echo date("Y") ?>. All right reserved.
- 		</div>
- 	
- 	</body>
- </html>
+
+    <div class="footer">
+        &copy; <?php echo date("Y") ?>. All right reserved.
+    </div>
+
+</body>
+
+</html>
