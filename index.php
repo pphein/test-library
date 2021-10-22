@@ -43,6 +43,10 @@
 <head>
     <title>Library</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="http://mmwebfonts.comquas.com/fonts/?font=padauk">
+    <link rel="stylesheet" type="text/css" href="http://mmwebfonts.comquas.com/fonts/?font=myanmar3">
+
+
 </head>
 
 <body>
