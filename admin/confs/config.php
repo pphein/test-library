@@ -1,8 +1,8 @@
 <?php
-$dbhost = "localhost";
+$dbhost = "127.0.0.1";
 $dbuser = "root";
-$dbpass = "";
-$dbname  = "library";
+$dbpass = "root";
+$dbname  = "pphlibrary";
 
 $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 

@@ -27,11 +27,13 @@
 	}
 
 	$cats = mysqli_query($conn, "SELECT * FROM categories");
-
-    $borrows = mysqli_query($conn, "SELECT * FROM order_items WHERE user_id = $user_id");
     
-    foreach($borrows as $borrow){
-        $borrowbook += 1;
+    if($user_id) {
+        $borrows = mysqli_query($conn, "SELECT * FROM order_items WHERE user_id = $user_id");
+
+        foreach($borrows as $borrow){
+            $borrowbook += 1;
+        }
     }
     
 ?>
@@ -107,10 +109,6 @@
         <?php if (isset($_SESSION['auth']) && isset($_SESSION['admin'])): ?>
         <li><a href="admin/book-list.php">Admin Page</a></li>
         <?php endif; ?>
-
-
-
-
     </ul>
 
     <div class="main">
