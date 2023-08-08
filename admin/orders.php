@@ -46,7 +46,7 @@
 						while($item = mysqli_fetch_assoc($items)):					
 					 ?>
                 <b>
-                    <a href="../book-detail.php?id=<?php echo $item['book_id'] ?>">
+                    <a href="../book-detail.php?id=<?php echo $item['id'] ?>">
                         <?php echo $item['title']; ?>
                     </a>
                     <i>ငှားသည့်ရက်စွဲ
@@ -55,7 +55,7 @@
 
                     <i>ပြန်အပ်ရက်စွဲ : <?php  $date = strtotime("+7 day",$date); echo date('d-m-Y', $date);  ?> </i>
 
-                    <a href="back-book.php?id=<?php echo $item['book_id']; ?>">
+                    <a href="back-book.php?id=<?php echo $item['id']; ?>">
                         <button>Return</button>
                     </a>
                 </b>
