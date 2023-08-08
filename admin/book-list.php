@@ -71,7 +71,6 @@ $result = mysqli_query($conn, "SELECT * FROM books LIMIT ".$page_first_result.",
 
             <b> <?php echo $row['title'] ?> </b>
             <i>by <?php echo $row['author'] ?> </i>
-            <small> (in <?php echo $row['name'] ?> ) </small>
             <span> $<?php echo $row['price'] ?> </span>
             <p> <?php echo $row['summary'] ?> </p>
 

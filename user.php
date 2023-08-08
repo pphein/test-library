@@ -1,13 +1,9 @@
-<?php 
-//including the database connection file
+<?php
 	include ("admin/confs/config.php");
 	
 	$name = $_POST['name'];	
 	$email = $_POST['email'];	
 	$password = md5($_POST['password']);
-
-	
-	
 	$check = mysqli_query($conn, "SELECT * FROM user WHERE email = '$email'");
 	$result = mysqli_fetch_assoc($check);
 
@@ -18,11 +14,9 @@
 	}else{
 		$sql = mysqli_query($conn, "INSERT INTO user ( name , email , password, user_registered ) VALUES ('$name', '$email', '$password',now())");		
 	}
-
 	if($sql){
 		$check = mysqli_query($conn, "SELECT * FROM user WHERE email = '$email'");
 		$result = mysqli_fetch_assoc($check);
-
 		$user_id = $result['ID'];
 
 		session_start();
@@ -35,4 +29,3 @@
 		$_SESSION['name'] = $name;
 		header("location: index.php");
 	}
- ?>
