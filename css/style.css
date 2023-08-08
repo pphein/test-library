@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Padauk&display=swap');
 html {
     background: #95a5a6;
 }
@@ -74,7 +75,7 @@ input[type=text],
 input[type=password],
 textarea,
 select {
-    font-family: Arial, Helvetica, sans-serif;
+    /* font-family: Arial, Helvetica, sans-serif; */
     border: 1px solid #ddd;
     padding: 6px;
     width: 300px;

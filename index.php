@@ -2,7 +2,10 @@
 	session_start();
 	include ("admin/confs/config.php");
     
-    $user_id = $_SESSION['id'];
+    $user_id = 0;
+    if(isset($_SESSION['id'])){
+        $user_id = $_SESSION['id'];
+    }
     $borrowbook = 0;
 	$cart = 0;
 	if(isset( $_SESSION['cart'])){
@@ -28,7 +31,7 @@
 
 	$cats = mysqli_query($conn, "SELECT * FROM categories");
 
-    $borrows = mysqli_query($conn, "SELECT * FROM order_items WHERE user_id = $user_id");
+    $borrows = mysqli_query($conn, "SELECT * FROM `order_items` WHERE user_id = $user_id");
     
     foreach($borrows as $borrow){
         $borrowbook += 1;
@@ -45,6 +48,9 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="http://mmwebfonts.comquas.com/fonts/?font=padauk">
     <link rel="stylesheet" type="text/css" href="http://mmwebfonts.comquas.com/fonts/?font=myanmar3">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Padauk&display=swap" rel="stylesheet">
 
 
 </head>
@@ -68,7 +74,7 @@
 
     <div class="header">
 
-        <h2>Welcome From Library :-) </h2>
+        <h2>Welcome To Library :-) </h2>
 
         <div>
             <form class="search" action="search.php" method="get">

@@ -7,10 +7,7 @@
 
 	$check = mysqli_query($conn, "SELECT * FROM tmp_book_items WHERE tmp_book_id = $id");
 	$check_book = mysqli_fetch_assoc($check);
-
-	//var_dump($check_book);
-	//die();
-
+	
 	if($check_book){
 		echo "Already Chosen";
 		
