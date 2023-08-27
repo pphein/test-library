@@ -168,7 +168,9 @@
                             <label>
                                 <input type="text" name="comment" autocomplete="off" placeholder="Comment.....">
                             </label>
-                            <input class="button" type="submit" value="comment" style="color: green;">
+                            <label for="">
+                                <input class="button" type="submit" value="comment" style="color: green;">
+                            </label>
                         </form>
                     </div>
                 </li>
